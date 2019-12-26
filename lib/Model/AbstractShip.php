@@ -1,22 +1,28 @@
 <?php 
 
-class Ship{
+abstract class AbstractShip{
+	private $id;
 	private $name;
 	private $weaponPower = 0;
-	private $jediFactor = 0;
+	
 	private $strength = 0;
-	private $underRepair;
 
-	public function __construct(){
-		$this->underRepair = mt_rand(1,100)<30;
+	abstract public function getJediFactor();
+
+	abstract public function getType();
+
+	abstract public function isFunctional();
+
+	public function __construct($name){
+		$this->name = $name;
 	}
 
-	public function isFunctional(){
-		return !$this->underRepair;
+	public function setId($id){
+		$this->id = $id;
 	}
 
-	public function setName($name){
-		$this->name = strtoupper($name);
+	public function getId(){
+		return $this->id;
 	}
 
 	public function getName(){
@@ -28,13 +34,6 @@ class Ship{
 	}
 	public function getWeaponPower(){
 		return $this->weaponPower;
-	}
-
-	public function setJediFactor($jediFactor){
-		$this->jediFactor = $jediFactor;
-	}
-	public function getJediFactor(){
-		return $this->jediFactor;
 	}
 
 	public function setStrength($strength){
@@ -55,7 +54,7 @@ class Ship{
 			'%s: %s/%s/%s',
 			$this->name,
 			$this->weaponPower,
-			$this->jediFactor,
+			$this->getJediFactor(),
 			$this->strength
 		);
 		} else {
@@ -63,7 +62,7 @@ class Ship{
 			'%s: w:%s, j:%s, s:%s',
 			$this->name,
 			$this->weaponPower,
-			$this->jediFactor,
+			$this->getJediFactor(),
 			$this->strength
 		);
 		}	
@@ -72,5 +71,5 @@ class Ship{
 	public function doesGivenShipHasMoreStrength($givenShip){
 		return $givenShip->strength > $this->strength;
 	}
-}
 
+}
